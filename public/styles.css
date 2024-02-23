@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+*{
+   font-family: 'Poppins', sans-serif;
+   margin:0; padding:0;
+   box-sizing: border-box;
+   outline: none; border:none;
+   text-decoration: none;
+}
+nav {
+    background-color: #ffffff;
+    color: #fff;
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav h4 {
+    margin: 0; 
+    font-size: 24px; 
+    font-weight: 500; 
+    color: grey; 
+    text-decoration: none; 
+}
+
+nav h4 a:hover {
+    color: rgb(46, 46, 250);
+    text-decoration: none;
+    font-size: 24px; 
+    font-weight: bold; 
+}
+nav ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+nav li{
+    list-style: none;
+}
+
+nav li a{
+    color: #000;
+    text-decoration: none;
+    font-weight:400;
+    padding: 5px 8px;
+}
+
+nav li a:hover {
+    color: rgb(46, 46, 250);
+    text-decoration: none;
+}
+
+.card-header {
+    text-align: center;
+    background-color: #fff;
+    color: rgb(50, 50, 255);
+    font-weight: bold;
+    padding: 10px; 
+}
+#submit-btn {
+    margin-top: 20px; 
+    margin-bottom: 20px;
+     
+}
+
+.jumbotron-bg {
+    background-image: url('/images/mortgage1.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .card-custom {
+    height: 50%; 
+    padding: 10px;
+    width: calc(100% - 40px);
+
+}
+
+.card-custom .card-img-top {
+    height: 100%;
+    width: 100%;  
+}
+
+#sidebar {
+    position: fixed;
+    top: 100px; 
+    left: 0;
+    width: 250px;
+    height: calc(100% - 60px); 
+    background-color: #f8f9fa;
+    padding-top: 50px; 
+    padding-left: 20px; 
+    border-right: 1px solid #ddd; 
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding-left: 0; 
+    margin-top: 20px; /* Adjust margin to separate content from top */
+}
+
+#sidebar ul li {
+    margin-bottom: 10px;
+}
+
+#sidebar ul li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 0; /* Adjust padding for vertical alignment */
+}
+
+#sidebar ul li a:hover {
+    color: #007bff;
+}
+.mortgage-status {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.mortgage-status h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+.mortgage-status .status-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.mortgage-status .status-item span {
+    font-weight: bold;
+}
+/* Adjust content to avoid overlapping with sidebar */
+.content {
+    margin-left: 350px; /* Adjust according to the sidebar width */
+    padding: 20px;
+}
+.mortgage-form form {
+    width: 80%; /* Adjust the width of the form as needed */
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mortgage-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.mortgage-form input,
+.mortgage-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.mortgage-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.mortgage-form button:hover {
+    background-color: #0056b3;
+}
+
+
+
