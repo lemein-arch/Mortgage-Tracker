@@ -133,11 +133,12 @@ nav li a:hover {
 .mortgage-status .status-item span {
     font-weight: bold;
 }
-/* Adjust content to avoid overlapping with sidebar */
-.content {
-    margin-left: 350px; /* Adjust according to the sidebar width */
+
+.formcontent {
+    margin-left: 350px; 
     padding: 20px;
 }
+
 .mortgage-form form {
     width: 80%; /* Adjust the width of the form as needed */
     padding: 20px;
@@ -173,6 +174,8 @@ nav li a:hover {
 .mortgage-form button:hover {
     background-color: #0056b3;
 }
+
+
 
 
 

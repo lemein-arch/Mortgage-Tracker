@@ -18,12 +18,13 @@ initializePassport(passport);
 
 const applicationController = require('./applicationController');
 
+const adminapplication = require('./adminapplication');
+
 
 //middleware
 app.use(express.urlencoded({ extended: false}));
 
 app.set("view engine", "hbs");
-
 
 
 app.use(session({
@@ -42,6 +43,8 @@ const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));
 
 app.use('/', applicationController);
+
+app.use('/', adminapplication);
 
 app.get('/', (req, res)=>{
     res.render("index");
@@ -85,6 +88,16 @@ app.get("/calender", checkNotAuthenticated, (req, res) => {
 app.get("/admin/admindashboard", checkAdminAuthenticated, (req, res) => {
     res.render("admin/admindashboard", { user: req.user.firstname });
 });
+
+app.get("/admin/admindapplication", checkAdminAuthenticated, (req, res) => {
+    res.render("admin/admindapplication", { user: req.user.firstname });
+});
+
+
+app.get("/admin/transactions", checkAdminAuthenticated, (req, res) => {
+    res.render("admin/transactions", { user: req.user.firstname });
+});
+
 
 
 
