@@ -61,14 +61,9 @@
                             <td>{{this.employment}}</td>
                             <td>{{this.income}}</td>
                             <td>{{this.creditscore}}</td>
-                            <td> 
-                                   <form action="/adminapplication/{{this.application_id}}" method="POST" class="approval-form">
-                                   <button type="submit" class="btn btn-success">Approve</button>
-                                   </form>
-                                   
-                                   <form action="/adminapplication/{{this.application_id}}" method="POST" class="rejection-form">
-                                   <button type="submit" class="btn btn-danger">Reject</button>
-                                   </form>
+                            <td>
+                                <button class="btn btn-success approve-btn" data-application-id="{{this.application_id}}">Approve</button>
+                                <button class="btn btn-danger reject-btn" data-application-id="{{this.application_id}}">Reject</button>
                             </td>
                         </tr>
                         {{/each}}
@@ -77,5 +72,37 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
+    <script>
+        
+        $(document).ready(function() {
+        $('.approve-btn').click(function() {
+            var applicationId = $(this).data('application-id');
+            updateApplicationStatus(applicationId, 'Approved');
+        });
+
+        $('.reject-btn').click(function() {
+            var applicationId = $(this).data('application-id');
+            updateApplicationStatus(applicationId, 'Rejected');
+        });
+
+        function updateApplicationStatus(applicationId, status) {
+            $.ajax({
+                type: 'PUT',
+                url: '/admin/adminapplication/' + applicationId,
+                data: { status: status },
+                success: function(response) {
+                    console.log('Status updated successfully');
+                    // You can update the UI here if needed
+                },
+                error: function(error) {
+                    console.error('Error updating status:', error);
+                    // Handle error scenario
+                }
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
