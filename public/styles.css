@@ -9,45 +9,54 @@
 }
 nav {
     background-color: #ffffff;
-    color: #fff;
+    color: #000;
     padding: 30px 60px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-nav h4 {
-    margin: 0; 
-    font-size: 24px; 
-    font-weight: 500; 
-    color: grey; 
-    text-decoration: none; 
-}
-
-nav h4 a:hover {
-    color: rgb(46, 46, 250);
-    text-decoration: none;
-    font-size: 24px; 
-    font-weight: bold; 
-}
-nav ul{
+.navbar-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-}
-nav li{
-    list-style: none;
+    width: 100%;
 }
 
-nav li a{
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li:first-child {
+    margin-left: 0;
+}
+
+.nav-links li a {
     color: #000;
     text-decoration: none;
-    font-weight:400;
+    font-weight: 400;
     padding: 5px 8px;
 }
 
-nav li a:hover {
+.nav-links li a:hover {
     color: rgb(46, 46, 250);
+    text-decoration: none;
+}
+
+.name {
+    margin-left: 10px;
+}
+
+.logo {
+    margin-right: auto;
     text-decoration: none;
 }
 
@@ -81,87 +90,52 @@ nav li a:hover {
     height: 100%;
     width: 100%;  
 }
-
-#sidebar {
-    position: fixed;
-    top: 100px; 
-    left: 0;
-    width: 250px;
-    height: calc(100% - 60px); 
-    background-color: #f8f9fa;
-    padding-top: 50px; 
-    padding-left: 20px; 
-    border-right: 1px solid #ddd; 
-}
-
-#sidebar ul {
-    list-style-type: none;
-    padding-left: 0; 
-    margin-top: 20px; /* Adjust margin to separate content from top */
-}
-
-#sidebar ul li {
-    margin-bottom: 10px;
-}
-
-#sidebar ul li a {
-    display: block;
-    text-decoration: none;
-    color: #333;
-    padding: 10px 0; /* Adjust padding for vertical alignment */
-}
-
-#sidebar ul li a:hover {
-    color: #007bff;
-}
-.mortgage-status {
-    background-color: #f8f9fa;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.mortgage-status h3 {
-    color: #333;
-    margin-bottom: 10px;
-}
-.mortgage-status .status-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-.mortgage-status .status-item span {
-    font-weight: bold;
-}
-
-.formcontent {
-    margin-left: 350px; 
-    padding: 20px;
-}
-
-.mortgage-form form {
-    width: 80%; /* Adjust the width of the form as needed */
-    padding: 20px;
-    background-color: #f8f9fa;
+.applicationcontainer {
+    width: 80%;
+    margin: 30px auto; /* Center the container */
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
 }
 
-.mortgage-form label {
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    max-width: 600px; /* Adjust form max width */
+    margin: 0 auto; /* Center the form */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
     display: block;
+    font-weight: bold;
     margin-bottom: 5px;
 }
 
-.mortgage-form input,
-.mortgage-form select {
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
-.mortgage-form button {
+select {
+    padding: 10px;
+}
+
+button {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -169,12 +143,12 @@ nav li a:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.mortgage-form button:hover {
+button:hover {
     background-color: #0056b3;
 }
-
 
 
 

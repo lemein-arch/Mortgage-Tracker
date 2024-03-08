@@ -85,20 +85,22 @@ app.get("/calender", checkNotAuthenticated, (req, res) => {
     res.render('calender', { user: req.user.firstname });
 });
 
+app.get("/loans", checkNotAuthenticated, (req, res) => {
+    res.render('calender', { user: req.user.firstname });
+});
+
 app.get("/admin/admindashboard", checkAdminAuthenticated, (req, res) => {
     res.render("admin/admindashboard", { user: req.user.firstname });
 });
 
-app.get("/admin/admindapplication", checkAdminAuthenticated, (req, res) => {
-    res.render("admin/admindapplication", { user: req.user.firstname });
+app.get("/admin/adminapplication", checkAdminAuthenticated, (req, res) => {
+    res.render("admin/adminapplication", { user: req.user.firstname });
 });
 
 
 app.get("/admin/transactions", checkAdminAuthenticated, (req, res) => {
     res.render("admin/transactions", { user: req.user.firstname });
 });
-
-
 
 
 app.get("/Users/logout", (req,res) =>{
