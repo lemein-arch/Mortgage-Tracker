@@ -26,7 +26,7 @@
         
        <div class="applicationcontainer">
         <h2>Mortgage Application</h2>
-        <form action="/application" method="POST">
+        <form action="/application" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" name="firstname" required>
@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label for="phone">Phone Number:</label>
-                <input type="text" id="phone" name="phone" required>
+                <input type="text" id="phone" name="phone" value="254" required>
             </div>
             <div class="form-group">
                 <label for="address">Address:</label>
@@ -78,6 +78,82 @@
             <button type="submit">Submit Application</button>
         </form>
     </div>
+
+    <script>
+        function validateForm() {
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const propertyValue = parseFloat(document.getElementById('propertyvalue').value);
+    const loanAmount = parseFloat(document.getElementById('loanamount').value);
+    const employment = document.getElementById('employment').value;
+    const income = parseFloat(document.getElementById('income').value);
+    const creditScore = parseFloat(document.getElementById('creditscore').value);
+
+    // Required Fields
+    const requiredFields = [email, phone, propertyValue, loanAmount, employment, income, creditScore];
+    for (const field of requiredFields) {
+        if (!field) {
+            alert('Please fill out all required fields.');
+            return false;
+        }
+    }
+
+    // Email validation using regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+    
+    // Phone number validation
+    const phoneRegex = /^\d{12}$/; // Assuming a 10-digit phone number
+    if (!phone.match(phoneRegex)) {
+        alert('Please enter a valid phone number.');
+        return false;
+    }
+
+    // Check if the first three digits of the phone number are '254'
+    if (phone.slice(0, 3) !== '254') {
+        alert('Please enter a Kenyan phone number starting with "254".');
+        return false;
+    }
+
+    // Numeric Fields
+    if (isNaN(propertyValue) || isNaN(loanAmount) || isNaN(income) || isNaN(creditScore)) {
+        alert('Please enter valid numeric values for property value, loan amount, income, and credit score.');
+        return false;
+    }
+
+    // Property Value vs. Loan Amount
+    if (loanAmount > propertyValue) {
+        alert('Loan amount cannot exceed property value.');
+        return false;
+    }
+
+    // Employment Status
+    const validEmploymentStatus = ['employed', 'self-employed', 'unemployed'];
+    if (!validEmploymentStatus.includes(employment.toLowerCase())) {
+        alert('Please select a valid employment status.');
+        return false;
+    }
+
+    // Annual Income
+    if (income < 0 || income > 1000000) { // Adjust range as needed
+        alert('Please enter a valid annual income.');
+        return false;
+    }
+
+    // Credit Score
+    if (creditScore < 300 || creditScore > 850) { // Adjust range as needed
+        alert('Please enter a valid credit score (between 300 and 850).');
+        return false;
+    }
+
+    // If all validations pass, return true to submit the form
+    return true;
+}
+
+    </script>
      
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

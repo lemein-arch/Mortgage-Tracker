@@ -99,6 +99,11 @@ nav {
     padding: 30px;
 }
 
+.table-margin {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 h2 {
     text-align: center;
     color: #333;

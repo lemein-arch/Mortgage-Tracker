@@ -5,6 +5,7 @@ const path = require ("path");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const flash = require("express-flash");
+const sendEmail = require('./mail.js');
 require("dotenv").config();
 
 
@@ -81,12 +82,8 @@ app.get("/application", checkNotAuthenticated, (req, res) => {
     res.render('application', { user: req.user.firstname });
 });
 
-app.get("/calender", checkNotAuthenticated, (req, res) => {
-    res.render('calender', { user: req.user.firstname });
-});
-
 app.get("/loans", checkNotAuthenticated, (req, res) => {
-    res.render('calender', { user: req.user.firstname });
+    res.render('loans', { user: req.user.firstname });
 });
 
 app.get("/admin/admindashboard", checkAdminAuthenticated, (req, res) => {
@@ -177,6 +174,8 @@ app.post("/register" , async(req, res) =>{
             );
     }
 });
+
+//sendEmail();
 
 app.post("/Users/login", passport.authenticate("local", {
     successRedirect: "/dashboard",

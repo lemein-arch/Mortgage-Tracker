@@ -1,14 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require("./dbConfig");
+const sendEmail = require('./mail.js');
 
 // PUT request to update application status
-router.put('/admin/adminapplication/:id', async (req, res) => {
+/**router.put('/admin/adminapplication/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
     try {
         await pool.query('UPDATE applications SET status = $1 WHERE application_id = $2', [status, id]);
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Error updating application status:', error.message);
+        res.sendStatus(500);
+    }
+}); **/
+
+
+router.put('/admin/adminapplication/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        // Update the application status in the database
+        await pool.query('UPDATE applications SET status = $1 WHERE application_id = $2', [status, id]);
+
+        // Get the application details to determine the email recipient
+        const application = await pool.query('SELECT * FROM applications WHERE application_id = $1', [id]);
+        const { email } = application.rows[0];
+
+        // Send email notification based on the status
+        if (status === 'Approved') {
+            sendEmail(email, 'Application Approved', 'Your mortgage application has been approved.');
+        } else if (status === 'Rejected') {
+            sendEmail(email, 'Application Rejected', 'Your mortgage application has been rejected.');
+        }
+
         res.sendStatus(200);
     } catch (error) {
         console.error('Error updating application status:', error.message);
