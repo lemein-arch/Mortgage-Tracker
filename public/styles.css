@@ -59,6 +59,13 @@ nav {
     margin-right: auto;
     text-decoration: none;
 }
+.logo a {
+    text-decoration: none;
+}
+
+.logo a:hover {
+    text-decoration: none;
+}
 
 .card-header {
     text-align: center;

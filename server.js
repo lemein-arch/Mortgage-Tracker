@@ -21,6 +21,8 @@ const applicationController = require('./applicationController');
 
 const adminapplication = require('./adminapplication');
 
+const submitdocs = require('./submitdocs.js');
+
 
 //middleware
 app.use(express.urlencoded({ extended: false}));
@@ -47,6 +49,8 @@ app.use('/', applicationController);
 
 app.use('/', adminapplication);
 
+app.use('/', submitdocs);
+
 app.get('/', (req, res)=>{
     res.render("index");
 });
@@ -61,11 +65,11 @@ app.get("/Users/login", checkAuthenticated,(req, res) =>{
 
 app.get("/dashboard", checkNotAuthenticated, (req, res) => {
     if (req.isAuthenticated()) {
-        const isAdmin = req.user.isadmin; // Assuming 'isadmin' is the property name
+        const isAdmin = req.user.isadmin; 
         if (isAdmin) {
-            return res.redirect("/admin/admindashboard"); // Redirect to admin dashboard
+            return res.redirect("/admin/admindashboard"); 
         } else {
-            return res.render("dashboard", { user: req.user.firstname }); // Render user dashboard
+            return res.render("dashboard", { user: req.user.firstname }); 
         }
     } else {
         // If user is not authenticated, redirect to login
@@ -84,6 +88,10 @@ app.get("/application", checkNotAuthenticated, (req, res) => {
 
 app.get("/loans", checkNotAuthenticated, (req, res) => {
     res.render('loans', { user: req.user.firstname });
+});
+
+app.get("/submitdocs", checkNotAuthenticated, (req, res) => {
+    res.render('submitdocs', { user: req.user.firstname });
 });
 
 app.get("/admin/admindashboard", checkAdminAuthenticated, (req, res) => {

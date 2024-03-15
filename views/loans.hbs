@@ -25,31 +25,31 @@
         </div>
     
         <div class="content">
-    <div class="container-fluid mt-4">
-        <div class="text-center"><h2>User Applications</h2></div>
-        <div class="table-margin"> 
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover rounded"> 
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Address</th>
-                            <th>Property Address</th>
-                            <th>Property Value</th>
-                            <th>Loan Amount</th>
-                            <th>Employment</th>
-                            <th>Current Income</th>
-                            <th>Credit Score</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each applicationController}}
-                        <tr>
+            <div class="container-fluid mt-4">
+                <div class="text-center"><h2>My Applications</h2></div>
+                <div class="table-margin"> 
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover rounded"> 
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>Property Address</th>
+                                    <th>Property Value</th>
+                                    <th>Loan Amount</th>
+                                    <th>Employment</th>
+                                    <th>Current Income</th>
+                                    <th>Credit Score</th>
+                                    <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each applicationController}}
+                                        <tr>
                             <td>{{@index}}</td>
                             <td>{{this.firstname}}</td>
                             <td>{{this.lastname}}</td>

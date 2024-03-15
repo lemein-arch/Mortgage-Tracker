@@ -8,13 +8,12 @@ function sendEmail(to, subject, text) {
             pass: process.env.EMAIL_PASSWORD
         }
     });
-
-    let details = {
+  let details = {
         from: process.env.EMAIL_USER,
         to: to,
         subject: subject,
         text: text
-    };
+    }; 
 
     mailTransporter.sendMail(details, (err) => {
         if (err) {

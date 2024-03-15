@@ -10,7 +10,7 @@ router.post('/application', async (req, res) => {
     try {
 
         const userid = req.user.id;
-        // Insert data into the database
+        // Insert application data into the database
         const newApplication = await pool.query(
             `INSERT INTO applications (firstname, lastname, email, phone, address, propertyaddress, propertyvalue, loanamount, employment, income, creditscore, status, user_id) 
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
@@ -18,9 +18,9 @@ router.post('/application', async (req, res) => {
         );
         console.log('Data inserted successfully');
         // Send email to user
-        sendEmail(email, 'Application Received', 'Your mortgage application has been received and will undergo review.');
+        //sendEmail(email, 'Application Received', 'Your mortgage application has been received and will undergo review.');
         
-        res.redirect('/dashboard'); 
+        res.redirect('/submitdocs'); 
     } catch (err) {
         console.error('Error inserting data:', err.message);
         res.status(500).send('Internal Server Error');
