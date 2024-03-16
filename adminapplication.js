@@ -66,4 +66,20 @@ router.get('/admin/admindashboard', async (req, res) => {
     }
 });
 
+// GET request to fetch user documents
+router.get('/admin/viewdocs/:userId', async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        // Fetch the documents for the specified user
+        const userDocuments = await pool.query('SELECT * FROM documents WHERE user_id = $1', [userId]);
+        
+        // Render the viewdocs template and pass the user's documents data
+        res.render('admin/viewdocs', { userId, userDocuments: userDocuments.rows });
+    } catch (error) {
+        console.error('Error fetching user documents:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = router;

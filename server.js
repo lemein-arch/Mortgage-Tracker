@@ -108,6 +108,10 @@ app.get("/admin/transactions", checkAdminAuthenticated, (req, res) => {
     res.render("admin/transactions", { user: req.user.firstname });
 });
 
+app.get("/admin/viewdocs", checkAdminAuthenticated, (req, res) => {
+    res.render("admin/viewdocs", { user: req.user.firstname });
+});
+
 
 app.get("/Users/logout", (req,res) =>{
     req.logOut(function(err) {

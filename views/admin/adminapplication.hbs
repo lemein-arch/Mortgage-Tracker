@@ -20,7 +20,9 @@
     </div>
 </nav>
 
-<h2>Hello Admin{{user}}</h2>
+        <div class="name">
+            <h2>Hello Admin {{user}}</h2>
+        </div>
        
      <div class="content">
         <div class="container mt-4">
@@ -48,8 +50,8 @@
                        {{#each adminapplication}}
                         <tr>
                             <td>{{@index}}</td>
-                            <td>{{this.firstname}}</td>
-                            <td>{{this.lastname}}</td>
+                            <td><a href="./viewdocs/{{this.id}}">{{this.firstname}}</a></td>
+                            <td><a href="./viewdocs/{{this.id}}">{{this.lastname}}</a></td>
                             <td>{{this.email}}</td>
                             <td>{{this.phone}}</td>
                             <td>{{this.address}}</td>
