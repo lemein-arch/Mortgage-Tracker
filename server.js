@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const flash = require("express-flash");
 const sendEmail = require('./mail.js');
+const fs = require('fs');
 require("dotenv").config();
 
 
@@ -173,6 +174,14 @@ app.post("/register" , async(req, res) =>{
                             console.log(results.rows);
                             req.flash("success_msg", "You are now registered. Please login in");
                             res.redirect("/Users/login");
+
+                            // Create directory for the user
+                            const userId = results.rows[0].id;
+                            const userDirectory = path.join(__dirname, 'public', 'documents', userId.toString());
+                            if (!fs.existsSync(userDirectory)) {
+                                fs.mkdirSync(userDirectory, { recursive: true });
+                                console.log('User directory created:', userDirectory);
+                            }
 
                         }
                         

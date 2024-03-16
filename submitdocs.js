@@ -5,12 +5,21 @@ const sendEmail = require('./mail');
 
 const router = express.Router();
 
-// Set up multer for file uploads
-const upload = multer({ dest: './documents/' }); 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const userId = req.user.id; 
+    const userUploadsPath = `./public/documents/${userId}/`; 
+    cb(null, userUploadsPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname); // Keep the original filename
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Route to handle form submission
 router.post('/submitdocs', upload.fields([
-    //one file per var
   { name: 'pay_statements', maxCount: 1 }, 
   { name: 'employment_contract', maxCount: 1 },
   { name: 'title_deed_lease', maxCount: 1 },
@@ -35,7 +44,7 @@ router.post('/submitdocs', upload.fields([
     console.log('Documents inserted successfully');
 
     // Send email to user
-    sendEmail(req.user.email, 'Documents Received', 'Your supporting documents have been received.');
+    sendEmail(req.user.email, 'Application Received', 'Your supporting documents have been received.');
     //sendEmail(email, 'Application Received', 'Your mortgage application has been received and will undergo review.');
 
     res.redirect('/dashboard'); // Redirect to a success page
