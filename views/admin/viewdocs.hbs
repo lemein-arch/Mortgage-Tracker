@@ -24,20 +24,34 @@
         <h2>Hello Admin {{user}}</h2>
     </div>
 
-    <div class="documents">
-        {{#if userDocuments.length}}
-            <h3>User Documents</h3>
-            <div class="document-list">
-                {{#each userDocuments}}
-                    <div class="document">
-                        <h4>{{this.document_name}}</h4>
-                        <embed src="{{this.document_path}}" type="application/pdf" width="100%" height="600px">
-                    </div>
-                {{/each}}
-            </div>
-        {{else}}
-            <p>No documents found for this user.</p>
-        {{/if}}
-    </div>
+  <div class="documents">
+    {{#if userDocuments.length}}
+        <h3>User Documents</h3>
+        <div class="document-list">
+            {{#each userDocuments}}
+                <div class="document">
+                    <h4 class="pdf-title" data-document-path="{{this.document_path}}" style="cursor: pointer;">{{this.document_name}}</h4>
+                </div>
+            {{/each}}
+        </div>
+    {{else}}
+        <p>No documents found for this user.</p>
+    {{/if}}
+</div>
+
+<!-- No need for the pdf-container div if you're opening in a new tab -->
+
+<script>
+    document.querySelectorAll('.pdf-title').forEach(title => {
+        title.addEventListener('click', async () => {
+            const documentPath = title.getAttribute('data-document-path');
+            // Open the document in a new tab
+            window.open(documentPath, '_blank');
+        });
+    });
+</script>
+
+
+
 </body>
 </html>

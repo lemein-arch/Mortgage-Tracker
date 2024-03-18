@@ -24,6 +24,8 @@ const adminapplication = require('./adminapplication');
 
 const submitdocs = require('./submitdocs.js');
 
+//const loans = require('./loans.js');
+
 
 //middleware
 app.use(express.urlencoded({ extended: false}));
@@ -52,6 +54,8 @@ app.use('/', adminapplication);
 
 app.use('/', submitdocs);
 
+//app.use('/', loans);
+
 app.get('/', (req, res)=>{
     res.render("index");
 });
@@ -77,7 +81,6 @@ app.get("/dashboard", checkNotAuthenticated, (req, res) => {
         res.redirect("/Users/login");
     }
 });
-
 
 app.get("/loanpayments", checkNotAuthenticated, (req, res) => {
     res.render('loanpayments', { user: req.user.firstname });
@@ -175,7 +178,7 @@ app.post("/register" , async(req, res) =>{
                                 throw err;
                             }
 
-                            console.log(results.rows);
+                           /**  console.log(results.rows);
                             req.flash("success_msg", "You are now registered. Please login in");
                             res.redirect("/Users/login");
 
@@ -185,7 +188,7 @@ app.post("/register" , async(req, res) =>{
                             if (!fs.existsSync(userDirectory)) {
                                 fs.mkdirSync(userDirectory, { recursive: true });
                                 console.log('User directory created:', userDirectory);
-                            }
+                            } */
 
                         }
                         
