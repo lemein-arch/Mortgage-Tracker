@@ -64,7 +64,7 @@ app.get("/register", checkAuthenticated,(req, res) =>{
     res.render("register")
 })
 
-app.get("/Users/login", checkAuthenticated,(req, res) =>{
+app.get("/login", checkAuthenticated,(req, res) =>{
     res.render("login")
 })
 
@@ -78,7 +78,7 @@ app.get("/dashboard", checkNotAuthenticated, (req, res) => {
         }
     } else {
         // If user is not authenticated, redirect to login
-        res.redirect("/Users/login");
+        res.redirect("/login");
     }
 });
 
@@ -116,11 +116,11 @@ app.get("/admin/viewdocs", checkAdminAuthenticated, (req, res) => {
 });
 
 
-app.get("/Users/logout", (req,res) =>{
+app.get("/logout", (req,res) =>{
     req.logOut(function(err) {
         if(err) {return next(err);}
         req.flash("success_msg", "You have logged out");
-        res.redirect("/Users/login");
+        res.redirect("/login");
     });
 })
 app.post("/register" , async(req, res) =>{
@@ -201,12 +201,20 @@ app.post("/register" , async(req, res) =>{
 
 //sendEmail();
 
-app.post("/Users/login", passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/Users/login",
+app.post("/login", passport.authenticate("local", {
+    failureRedirect: "/login",
     failureFlash: true
-})
-);
+}), function(req, res) {
+    // If authentication is successful, determine the redirection based on isAdmin value
+    if (req.user.isadmin) {
+        // Redirect to admin dashboard if user is an admin
+        res.redirect("/admin/admindashboard");
+    } else {
+        // Redirect to regular dashboard if user is not an admin
+        res.redirect("/dashboard");
+    }
+});
+
 
 function checkAuthenticated(req, res, next){
     if (req.isAuthenticated()){
@@ -218,14 +226,14 @@ function checkNotAuthenticated(req, res, next){
     if (req.isAuthenticated()){
         return next()
     }
-    res.redirect("/Users/login")
+    res.redirect("/login")
 }
 
 function checkAdminAuthenticated(req, res, next) {
     if (req.isAuthenticated() && req.user.isadmin) {
         return next();
     }
-    res.redirect("/Users/login");
+    res.redirect("/login");
 }
 app.listen(PORT, ()=>{
     console.log(`Server running on ${PORT}`)

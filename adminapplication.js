@@ -1,21 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const session = require("express-session");
+const flash = require("express-flash");
 const { pool } = require("./dbConfig");
 const sendEmail = require('./mail.js');
-
-// PUT request to update application status
-/**router.put('/admin/adminapplication/:id', async (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    try {
-        await pool.query('UPDATE applications SET status = $1 WHERE application_id = $2', [status, id]);
-        res.sendStatus(200);
-    } catch (error) {
-        console.error('Error updating application status:', error.message);
-        res.sendStatus(500);
-    }
-}); **/
 
 
 router.put('/admin/adminapplication/:id', async (req, res) => {
