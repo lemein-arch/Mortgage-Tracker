@@ -53,27 +53,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each loans}}
                     <tr>
-                        <td>1</td>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>KES 10000</td>
-                        <td>ABCDEFJ</td>
+                         <td>{{@index}}</td>
+                            <td>{{this.firstname}}</td>
+                            <td>{{this.lastname}}</td>
+                            <td>{{this.amount}}</td>
+                            <td>{{this.refnumber}}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jane</td>
-                        <td>Smith</td>
-                        <td>KES 15000</td>
-                        <td>ABCDEFJ</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Michael</td>
-                        <td>Johnson</td>
-                        <td>KES 8000</td>
-                        <td>ABCDEFJ</td>
-                    </tr>
+                    {{/each}}
                 </tbody>
             </table>
         </div>

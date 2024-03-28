@@ -24,7 +24,7 @@ const adminapplication = require('./adminapplication');
 
 const submitdocs = require('./submitdocs.js');
 
-//const loans = require('./loans.js');
+const loans = require('./loans.js');
 
 
 //middleware
@@ -54,7 +54,7 @@ app.use('/', adminapplication);
 
 app.use('/', submitdocs);
 
-//app.use('/', loans);
+app.use('/', loans);
 
 app.get('/', (req, res)=>{
     res.render("index");
@@ -205,15 +205,26 @@ app.post("/login", passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true
 }), function(req, res) {
-    // If authentication is successful, determine the redirection based on isAdmin value
-    if (req.user.isadmin) {
-        // Redirect to admin dashboard if user is an admin
-        res.redirect("/admin/admindashboard");
+    // If authentication is successful
+    if (req.isAuthenticated()) {
+        // Store user ID and first name in the session
+        req.session.userId = req.user.id;
+        req.session.firstName = req.user.firstname;
+
+        // Determine the redirection based on isAdmin value
+        if (req.user.isadmin) {
+            // Redirect to admin dashboard if user is an admin
+            res.redirect("/admin/admindashboard");
+        } else {
+            // Redirect to regular dashboard if user is not an admin
+            res.redirect("/dashboard");
+        }
     } else {
-        // Redirect to regular dashboard if user is not an admin
-        res.redirect("/dashboard");
+        // Handle authentication failure if needed
+        res.redirect("/login");
     }
 });
+
 
 
 function checkAuthenticated(req, res, next){
