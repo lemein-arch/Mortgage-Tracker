@@ -21,7 +21,9 @@ router.post('/application', async (req, res) => {
         );
         console.log('Data inserted successfully');
         // Send email to user
-        //sendEmail(email, 'Application Received', 'Your mortgage application has been received and will undergo review.');
+        const emailContent = ` Hi ${firstName} 👋, \n\n Your mortgage application has been received and will undergo review.`;
+        
+        sendEmail(email, 'Application Received', emailContent);
         
         res.redirect('/dashboard'); 
     } catch (err) {
@@ -48,63 +50,84 @@ router.get('/dashboard', async (req, res) => {
         const userId = req.user.id; 
         const firstName = req.session.firstName;
 
-        // Fetch the loan amount from approved applications
+        // Fetch the loan amount from approved applications if any
         const loanDetails = await pool.query(
-            'SELECT amount FROM loans WHERE userid = $1',
-            [userId]
+            'SELECT amount FROM loans WHERE userid = $1', [userId]
         );
 
-        // If there is a loan for the user, calculate the interest rate
         let loanAmount = 0;
         let interestRate = 0;
+        let totalLoan = 0; // Initialize total loan amount
+
+        // If there is a loan for the user, calculate the interest rate and total loan amount
         if (loanDetails.rows.length > 0) {
             loanAmount = loanDetails.rows[0].amount;
             interestRate = loanAmount * 0.09; 
+            totalLoan = loanAmount + interestRate;
         }
 
-        // Render the dashboard with loan amount and interest rate
-        res.render('dashboard', {user: firstName, loanAmount, interestRate });
+        // Fetch the total amount paid by the user from transactions
+        const totalAmountPaidResult = await pool.query(
+            'SELECT SUM(amount) AS total_paid FROM transaction WHERE userid = $1',
+            [userId]
+        );
+
+        let totalAmountPaid = 0;
+        if (totalAmountPaidResult.rows.length > 0 && totalAmountPaidResult.rows[0].total_paid !== null) {
+            totalAmountPaid = totalAmountPaidResult.rows[0].total_paid;
+        }
+
+        // Calculate the difference between loan amount and total amount paid
+        const remainingAmount = totalLoan - totalAmountPaid;
+
+        // Render the dashboard with loan amount, total amount paid, remaining amount, and interest rate
+        res.render('dashboard', { user: firstName, loanAmount, totalAmountPaid, remainingAmount, interestRate, totalLoan });
     } catch (err) {
-        console.error('Error fetching loan details:', err.message);
-        res.status(500).send('Internal Server Error');
-    }
-}); 
-
-router.get('/dashboard', async (req, res) => {
-    try {
-        // Check if req.user and req.session.firstName are defined
-        if (!req.user || !req.session.firstName) {
-            // Handle the case where user authentication or session information is missing
-            return res.status(401).send('Unauthorized');
-        }
-        
-        const userId = req.session.userId;
-        const firstName = req.session.firstName;
-        
-        // Query the database to get all transactions of the user
-        const total = await pool.query('SELECT amount FROM transaction WHERE user = $1', [userId]);
-
-        // Initialize totalAmount to 0
-        let totalAmount = 0;
-
-        // Check if there are any transactions
-        if (total.rows.length > 0) {
-            // Calculate the total amount paid by summing up all transaction amounts
-            for (const transaction of total.rows) {
-                totalAmount += transaction.amount;
-            }
-        } else {
-            // Set totalAmount to 0 if there are no transactions
-            totalAmount = 0;
-        }
-
-        // Render the dashboard view with the total amount
-        res.render('dashboard', { user: firstName, totalAmount: totalAmount });
-    } catch (err) {
-        console.error('Error getting user applications:', err.message);
+        console.error('Error fetching loan details or total amount paid:', err.message);
         res.status(500).send('Internal Server Error');
     }
 });
+
+router.get('/dashboard', async (req, res) => {
+    try {
+        // Check if user is authenticated
+        if (!req.user || !req.session.firstName) {
+            return res.status(401).send('Unauthorized');
+        }
+        
+        // Extract user ID and first name from session
+        const userId = req.session.userId;
+        const firstName = req.session.firstName;
+        
+        // Query the database to get all transactions made by all users
+        const transactionsResult = await pool.query('SELECT userid, amount FROM transaction');
+
+        // Initialize an object to store total amounts for each user
+        const totalAmounts = {};
+
+        // Calculate total amount for each user
+        for (const transaction of transactionsResult.rows) {
+            if (!totalAmounts[transaction.userid]) {
+                totalAmounts[transaction.userid] = 0;
+            }
+            totalAmounts[transaction.userid] += transaction.amount;
+        }
+
+        // Get the total amount for the current user
+        const totalAmount = totalAmounts[userId] || 0;
+
+        // Render the dashboard view with the user's first name and the total amount
+        res.render('dashboard', { user: firstName, totalAmount: totalAmount });
+    } catch (err) {
+        // Log error
+        console.error('Error getting user transactions:', err.message);
+        // Render error page or send internal server error response
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 
 
 module.exports = router;

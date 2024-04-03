@@ -8,58 +8,45 @@
     <title>Mortgage | LoanPayments</title>
 </head>
 <body>
-<nav>
+ <nav>
     <div class="navbar-container">
         <h4 class="logo"><a href="/">KOPA KEJA</a></h4>
         <ul class="nav-links">
             <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/application">Apply Here</a></li>
             <li><a href="/loans">My Applications</a></li>
+            <li><a href="/payment">Make Payment</a></li>
             <li><a href="/loanpayments">Loan Payments</a></li>
             <li><a href="/logout">Log Out</a></li>
         </ul>
     </div>
 </nav>
 <div class="name">
-            <h2>Hello {{user}}</h2>
+            <h2>Hello 👋{{user}}</h2>
         </div>
-   <!--  <div class="content">
-        <div class="container mt-4">
-            <h2>Loan Payments</h2>
-          
-            <ul class="list-group">
-                {{#each payments}}
-                    <li class="list-group-item">
-                        <strong>Name:</strong> {{firstName}} {{lastName}} - <strong>Payment:</strong> KES {{amount}}
-                    </li>
-                {{/each}}
-            </ul>
-        </div>
-    </div> -->
 
-    <div class="content">
-        <div class="container mt-4">
-          <div class="text-center"><h2>Loan Payments</h2></div>  
-            <!-- Display payments in a table -->
-             <div class="table-wrapper">
+     <div class="content">
+    <div class="container mt-4">
+        <div class="text-center"><h2>Loan Payments</h2></div>  
+        <button onclick="downloadCSV()">Download CSV</button>
+           
+        <div class="table-wrapper">
             <table class="table">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Payment</th>
+                        <th>Name</th>
                         <th>Reference Number</th>
+                        <th>Amount Paid </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each loans}}
+                    {{#each transactions}}
                     <tr>
-                         <td>{{@index}}</td>
-                            <td>{{this.firstname}}</td>
-                            <td>{{this.lastname}}</td>
-                            <td>{{this.amount}}</td>
-                            <td>{{this.refnumber}}</td>
+                        <td>{{@index}}</td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.refnumber}}</td> 
+                        <td>{{this.amount}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -67,5 +54,32 @@
         </div>
     </div>
 </div>
+</div>
+<script>
+    function downloadCSV() {
+        // Get table data
+        var table = document.querySelector('.table');
+        var rows = table.querySelectorAll('tr');
+        var csv = [];
+        
+        // Iterate through rows and cells to construct CSV
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll('td, th');
+            for (var j = 0; j < cols.length; j++) { 
+                row.push(cols[j].innerText);
+            }
+            csv.push(row.join(','));
+        }
+        
+        // Create download link
+        var csvContent = csv.join('\n');
+        var encodedUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'loan_payments.csv');
+        document.body.appendChild(link);
+        link.click();
+    }
+</script>
 </body>
 </html>

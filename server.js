@@ -94,6 +94,10 @@ app.get("/loans", checkNotAuthenticated, (req, res) => {
     res.render('loans', { user: req.user.firstname });
 });
 
+app.get("/payment", checkNotAuthenticated, (req, res) => {
+    res.render('payment', { user: req.user.firstname });
+});
+
 app.get("/submitdocs", checkNotAuthenticated, (req, res) => {
     res.render('submitdocs', { user: req.user.firstname });
 });
@@ -178,10 +182,14 @@ app.post("/register" , async(req, res) =>{
                                 throw err;
                             }
 
-                           /**  console.log(results.rows);
+                             console.log(results.rows);
                             req.flash("success_msg", "You are now registered. Please login in");
-                            res.redirect("/Users/login");
+                            // Send email to user
+                            const registrationContent = ` Hi ${firstname} 👋, \n\n You are now a registred user with KopaKeja`;
+                            sendEmail(email, 'User Registered', registrationContent);
+                            res.redirect("/login");
 
+                            /**
                             // Create directory for the user
                             const userId = results.rows[0].id;
                             const userDirectory = path.join(__dirname, 'public', 'documents', userId.toString());

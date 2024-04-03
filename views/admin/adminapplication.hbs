@@ -21,21 +21,22 @@
 </nav>
 
         <div class="name">
-            <h2>Hello Admin {{user}}</h2>
+            <h2>Hello Admin {{user}} 👋</h2>
         </div>
        
      <div class="content">
-        <div class="container mt-4">
+        <div class="container-fluid mt-4">
             <div class="text-center"><h2>User Applications</h2></div>  
-            <div class="table-wrapper" id="admin-application-table">
-                <table class="table">
-                    <thead>
+            <div class="table-margin" id="admin-application-table">
+                <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover rounded">
+                    <thead class="thead-dark">
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
+                        <!--    <th>Email</th>
+                            <th>Phone Number</th> -->
                             <th>Address</th>
                             <th>Property Address</th>
                             <th>Property Value</th>
@@ -52,8 +53,8 @@
                             <td>{{@index}}</td>
                             <td><a href="./viewdocs/{{this.id}}">{{this.firstname}}</a></td>
                             <td><a href="./viewdocs/{{this.id}}">{{this.lastname}}</a></td>
-                            <td>{{this.email}}</td>
-                            <td>{{this.phone}}</td>
+                        <!--    <td>{{this.email}}</td>
+                            <td>{{this.phone}}</td> -->
                             <td>{{this.address}}</td>
                             <td>{{this.propertyaddress}}</td>
                             <td>{{this.propertyvalue}}</td>
@@ -69,6 +70,7 @@
                         {{/each}}
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -94,6 +96,7 @@
                 success: function(response) {
                     console.log('Status updated successfully');
                     // You can update the UI here if needed
+                    location.reload();
                 },
                 error: function(error) {
                     console.error('Error updating status:', error);

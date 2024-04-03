@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Kopa Keja | My Applications</title>
+</head>
+<body>
+   <nav>
+    <div class="navbar-container">
+        <h4 class="logo"><a href="/">KOPA KEJA</a></h4>
+        <ul class="nav-links">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/application">Apply Here</a></li>
+            <li><a href="/loans">My Applications</a></li>
+            <li><a href="/payment">Make Payment</a></li>
+            <li><a href="/loanpayments">Loan Payments</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+         
+         <div class="name">
+            <h2>Hello 👋{{user}}</h2>
+        </div>
+
+        <h2>Total Loan Amount: {{remainingAmount}}</h2>
+
+    <form action="/payment" method="POST" onsubmit="return checkPayment()">
+    <label for="mpesaNumber">M-Pesa Number:</label>
+    <input type="text" id="mpesaNumber" name="mpesaNumber" required><br><br>
+        
+    <label for="amount">Amount:</label>
+    <input type="number" id="TotalPaid" name="TotalPaid" ><br><br>
+        
+    <button type="submit">Pay with M-Pesa</button>
+</form>
+<script>
+function checkPayment() {
+    // Check required fields
+    const mpesaNumber = document.getElementById("mpesaNumber").value;
+    const TotalPaid = document.getElementById("TotalPaid").value;
+
+    if (!mpesaNumber || !TotalPaid) {
+        alert('Please fill out all required fields.');
+        return false;
+    }
+        // Check if the first three digits of the phone number are '254'
+    if (mpesaNumber.slice(0, 3) !== '254') {
+        alert('Please enter a Kenyan phone number starting with "254".');
+        return false;
+    }
+    // Perform validation here
+    if (mpesaNumber.length !== 12 || isNaN(mpesaNumber)) {
+        alert("Please enter a valid M-Pesa number.");
+        return false; 
+    }
+    return true; 
+}
+</script>        
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  	
+</body>
+</html>
